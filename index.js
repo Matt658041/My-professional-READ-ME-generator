@@ -1,7 +1,8 @@
 // node modules and required links
 const inquirer = require(`inquirer`);
 const generatePage = require('./src/page-template');
-const {writeFile, copyFile} = require(`utils/generate-site`);
+const {writeFile, copyFile} = require(`./utils/generateMarkdown`);
+
 
 
 //inquirer to generate questions
