@@ -1,6 +1,7 @@
 // node modules 
 const inquirer = require(`inquirer`);
 const fs = require(`fs`);
+const { title } = require("process");
 
 //inquirer to generate questions
 inquirer.prompt (
@@ -64,4 +65,5 @@ inquirer.prompt (
         }
 
     ]
-).then()
+)
+
