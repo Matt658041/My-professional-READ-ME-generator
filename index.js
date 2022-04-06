@@ -1,10 +1,12 @@
-// node modules 
+// node modules and required links
 const inquirer = require(`inquirer`);
-const fs = require(`fs`);
-const { title } = require("process");
+const generatePage = require('./src/page-template');
+const {writeFile, copyFile} = require(`utils/generate-site`);
+
 
 //inquirer to generate questions
-inquirer.prompt (
+const promptUser = () => {
+return inquirer.prompt (
     [
         {
             type:'input',
@@ -64,6 +66,23 @@ inquirer.prompt (
             validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},    
         }
 
-    ]
-)
-
+    ]);
+};
+promptUser()
+  .then(promptProject)
+  .then(portfolioData => {
+    return generatePage(portfolioData);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
+  });
