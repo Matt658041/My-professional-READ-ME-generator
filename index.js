@@ -2,7 +2,7 @@
 const fs = require(`fs`)
 const util = require(`util`)
 const inquirer = require(`inquirer`);
-const generateMarkdown = require(`./utils/generateMarkdown`);
+const generateMarkdown = require("./utils/generateMarkdown")
 // the promisify value is a better way to use a promise instead of the (err,value)
 const writeFileAsync = util.promisify(fs.writeFile);
 
