@@ -1,89 +1,89 @@
 // node modules and required links
+const fs = require(`fs`)
+const util = require(`util`)
 const inquirer = require(`inquirer`);
-const generatePage = require('./src/page-template');
-const {writeFile, copyFile} = require(`./utils/generateMarkdown`);
+const generateMarkdown = require(`./utils/generateMarkdown`);
+// the promisify value is a better way to use a promise instead of the (err,value)
+const writeFileAsync = util.promisify(fs.writeFile);
 
 
-
-//inquirer to generate questions
-const promptUser = () => {
-return inquirer.prompt (
-    [
+//These questions are used to populate the README.md
+function promptUser(){
+    return inquirer.prompt([
         {
-            type:'input',
+            type: "input",
+            name: "projectTitle",
             message: "What is the project title?",
-            name: `title`,
-            //validate property to check that the user provided a value
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},
         },
         {
-            type:'input',
-            message: "How do you install your application?",
-            name: `installation`,  
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},
+            type: "input",
+            name: "description",
+            message: "Write a brief description of your project: "
         },
         {
-            type:'input',
-            message: "instructions to follow",
-            name: `instructions`,  
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},  
+            type: "input",
+            name: "installation",
+            message: "Describe the installation process if any: ",
         },
         {
-            type:'input',
-            message: "any credits?",
-            name: `installation`,  
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},    
+            type: "input",
+            name: "usage",
+            message: "What is this project usage for?"
         },
         {
-            type:'input',
-            message: "how do you use your app?",
-            name: `usage`,  
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}}, 
+            type: "list",
+            name: "license",
+            message: "Chose the appropriate license for this project: ",
+            choices: [
+                "Apache",
+                "Academic",
+                "GNU",
+                "ISC",
+                "MIT",
+                "Mozilla",
+                "Open"
+            ]
         },
         {
-            //list of licenses
-            type:'list',
-            message: "What license did you use?",
-            name: `license`, 
-            choices:[`The MIT License`, `The GPL License`, `Apache License`, `GNU License`, `N/A`], 
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}}, 
+            type: "input",
+            name: "contributing",
+            message: "Who are the contributors of this projects?"
         },
         {
-            type: `input`,
-            message: `Github username:`,
-            name: `git`,
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}}, 
+            type: "input",
+            name: "tests",
+            message: "Is there a test included?"
         },
         {
-            type: `input`,
-            message: `Github username:`,
-            name: `git`,
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}}, 
-        }, 
+            type: "input",
+            name: "questions",
+            message: "What do I do if I have an issue? "
+        },
         {
-            type: `input`,
-            message: `E-mail:`,
-            name: `email`,
-            validate: (value) => {if (value) {return true} else {return `I need a value to continue`}},    
+            type: "input",
+            name: "username",
+            message: "Please enter your GitHub username: "
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Please enter your email: "
         }
-
     ]);
-};
-promptUser()
-  .then(promptProject)
-  .then(portfolioData => {
-    return generatePage(portfolioData);
-  })
-  .then(pageHTML => {
-    return writeFile(pageHTML);
-  })
-  .then(writeFileResponse => {
-    console.log(writeFileResponse);
-    return copyFile();
-  })
-  .then(copyFileResponse => {
-    console.log(copyFileResponse);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+} 
+/// This is the function that uses the new util.promisify Node method and the try method 
+async function init() {
+    try {
+        // Ask user questions and generate responses
+        const answers = await promptUser();
+        const generateContent = generateReadme(answers);
+        // Write new README.md to dist directory
+        await writeFileAsync('./dist/README.md', generateContent);
+        console.log('✔️  Successfully wrote to README.md');
+    }   catch(err) {
+        console.log(err);
+    }
+  }
+  
+  init();  
+
