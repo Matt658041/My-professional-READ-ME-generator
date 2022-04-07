@@ -72,18 +72,17 @@ function promptUser(){
     ]);
 } 
 /// This is the function that uses the new util.promisify Node method and the try method 
-async function init() {
+async function init () {
     try {
-        // Ask user questions and generate responses
+        // prompt questions and create responses
         const answers = await promptUser();
-        const generateContent = generateReadme(answers);
-        // Write new README.md to dist directory
-        await writeFileAsync('./dist/README.md', generateContent);
-        console.log('✔️  Successfully wrote to README.md');
-    }   catch(err) {
+        const generateContent = generateMarkdown(answers);
+        // this will write the read me file to the distribution folder
+        await writeFileAsync(`./dist/README.md`);
+        console.log(`Successfully wrote to README.md`);
+    } catch (err) {
         console.log(err);
     }
-  }
-  
-  init();  
+}
 
+init()
