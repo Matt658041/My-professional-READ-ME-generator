@@ -28,7 +28,7 @@ function promptUser(){
         {
             type: "input",
             name: "usage",
-            message: "What is this project usage for?"
+            message: "What is the project used for?"
         },
         {
             type: "list",
@@ -49,11 +49,7 @@ function promptUser(){
             name: "contributing",
             message: "Who are the contributors of this projects?"
         },
-        {
-            type: "input",
-            name: "tests",
-            message: "Is there a test included?"
-        },
+       
         {
             type: "input",
             name: "questions",

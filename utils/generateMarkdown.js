@@ -50,13 +50,12 @@ function generateMarkdown(answers) {
   ## Contributing
    ${answers.contributing}
    
-  ## Tests
-  ${answers.tests}
-
   ##Questions 
   ${answers.questions}<br/>
   <br/>
+
   My Github address [${answers.username}](https://github.com/${answers.username})<br />
+
   <br/>
   My E-mail address: ${answers.email}<br/><br/>
 
