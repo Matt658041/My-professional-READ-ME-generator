@@ -14,21 +14,32 @@ function promptUser(){
             type: "input",
             name: "projectTitle",
             message: "What is the project title?",
+            validate: descriptionInput => {
+                if (descriptionInput) {
+                    return true;
+                } else {
+                    console.log(`You need to enter a project description!`);
+                    return false;
+                }
+            }
         },
         {
             type: "input",
             name: "description",
-            message: "Write a brief description of your project: "
+            message: "Write a brief description of your project: ",
+            
         },
         {
             type: "input",
             name: "installation",
             message: "Describe the installation process if any: ",
+            
         },
         {
             type: "input",
             name: "usage",
-            message: "What is the project used for?"
+            message: "What is the project used for?",
+            
         },
         {
             type: "list",
@@ -47,23 +58,27 @@ function promptUser(){
         {
             type: "input",
             name: "contributing",
-            message: "Who are the contributors of this projects?"
+            message: "Who are the contributors of this projects?",
+            
         },
        
         {
             type: "input",
             name: "questions",
-            message: "What do I do if I have an issue? "
+            message: "What do I do if I have an issue? ",
+            
         },
         {
             type: "input",
             name: "username",
-            message: "Please enter your GitHub username: "
+            message: "Please enter your GitHub username: ",
+            
         },
         {
             type: "input",
             name: "email",
-            message: "Please enter your email: "
+            message: "Please enter your email: ",
+           
         }
     ]);
 } 
