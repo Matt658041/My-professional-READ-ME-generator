@@ -20,9 +20,7 @@ function createLicenseSection(license) {
 }
 
 
-
-
-//This will create a function to generate the markdown for the readme file.
+//This will create a function to generate the markdown for the readme file using template literals
 function generateMarkdown(answers) {
  const licenseBadge = createLicenseBadge(answers.license);
  const licenseSection = createLicenseSection(answers.license);
