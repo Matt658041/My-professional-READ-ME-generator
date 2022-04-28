@@ -1,13 +1,10 @@
 // node modules and required links
 const fs = require(`fs`)
-const util = require(`util`)
 const inquirer = require(`inquirer`);
 const generateMarkdown = require("./utils/generateMarkdown")
-// the promisify value is a better way to use a promise instead of the (err,value)
-const writeFileAsync = util.promisify(fs.writeFile);
+const path = require('path')
 
-
-//These questions are used to populate the README.md
+//These questions are used to populate the README.md with an array of questions
 function promptUser(){
     return inquirer.prompt([
         {
@@ -81,19 +78,21 @@ function promptUser(){
            
         }
     ]);
-} 
-/// This is the function that uses the new util.promisify Node method and the try method 
-async function init () {
-    try {
-        // prompt questions and create responses
-        const answers = await promptUser();
-        const generateContent = generateMarkdown(answers);
-        // this will write the read me file to the distribution folder
-        await writeFileAsync(`./dist/README.md`, generateContent);
-        console.log(`Successfully wrote to README.md`);
-    } catch (err) {
-        console.log(err);
-    }
+}  
+/// This is where you will it will write to the file and prompt the questions
+function writeToFile(fileName, data) {
+    console.log(data)
+     fs.writeFileSync(path.join(process.cwd(), fileName), data,(err) => {
+         if (err) throw err;
+
+     });
+}
+//prompting the questions
+function init() {
+    promptUser().then(inquirerResponses =>{
+        console.log('Generating README...');
+        writeToFile('README.md', generateMarkdown({ ...inquirerResponses }));
+    })
 }
 
 init()

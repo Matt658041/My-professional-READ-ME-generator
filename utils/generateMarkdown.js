@@ -1,11 +1,47 @@
 
-/////// This is the function for the generateMarkdown that will populate the README.md file/////////////////////////
+// this will return the badge based on what is selected and in none it will return an empty string 
+function createLicenseBadge(license) {
+  if (license !== 'None') {
+    return `![GitHub license](https://img.shields.io/badge/license-${license}-blue.svg)`
+  } else {
+    return ""
+  }
+}
 
+//this will return the license link and if there is none it will return an empty string 
+function createLicenseLink(license) {
+  if (license !== 'None') {
+    return `[License Link](http://choosealicense.com/licenses)`
+  } else {
+    return "";
+  }
+}
+
+// this reneders the license to the actual readme
+function createLicenseSection(license) {
+  if (license !== 'None') {
+    return `
+    ${license}`
+  } else{
+    return ""
+  }
+}
+
+
+
+
+//This will create a function to generate the markdown for the readme file.
 function generateMarkdown(answers) {
+  const licenseBadge = createLicenseBadge(data.license);
+  const licenseLink = createLicenseLink(data.license);
+  const licenseSection = createLicenseSection(data.license);
+
   return `
+${licenseBadge}
+ ${licenseLink}
+
   <h1 align='center'>${answers.projectTitle}<h1/> 
 
-  ![badge](https://img.shields.io/badge/license-${answers.license}-brightgreen)<br />
 
   ## Description
   ${answers.description}
@@ -26,9 +62,7 @@ function generateMarkdown(answers) {
   ${answers.usage}
 
   ## License
-  ![badge](https://img.shields.io/badge/license-${answers.license}-brightgreen)
-  <br />
-  This application is covered by the ${answers.license} license. 
+ ${data.license}
 
   ## Contributing
    ${answers.contributing}
