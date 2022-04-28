@@ -8,14 +8,6 @@ function createLicenseBadge(license) {
   }
 }
 
-//this will return the license link and if there is none it will return an empty string 
-function createLicenseLink(license) {
-  if (license !== 'None') {
-    return `[License Link](http://choosealicense.com/licenses)`
-  } else {
-    return "";
-  }
-}
 
 // this reneders the license to the actual readme
 function createLicenseSection(license) {
@@ -32,13 +24,13 @@ function createLicenseSection(license) {
 
 //This will create a function to generate the markdown for the readme file.
 function generateMarkdown(answers) {
-  const licenseBadge = createLicenseBadge(data.license);
-  const licenseLink = createLicenseLink(data.license);
-  const licenseSection = createLicenseSection(data.license);
+ const licenseBadge = createLicenseBadge(answers.license);
+ const licenseSection = createLicenseSection(answers.license);
 
   return `
 ${licenseBadge}
- ${licenseLink}
+${licenseSection}
+
 
   <h1 align='center'>${answers.projectTitle}<h1/> 
 
@@ -62,7 +54,7 @@ ${licenseBadge}
   ${answers.usage}
 
   ## License
- ${data.license}
+ ${answers.license}
 
   ## Contributing
    ${answers.contributing}
